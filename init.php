@@ -2,9 +2,9 @@
 /*
 Plugin Name: HWD WooCommerce Social Login
 Description: HWD WooCommerce Social login is a plugin that allows you to login to your e-commerce site through your Fitbit, Facebook, Twitter or Google+ account.
-Version: 2.0.12
-Author: Yithemes
-Author URI: http://yithemes.com/
+Version: 2.0.13
+Author: HWD
+Author URI: http://healthywebdeveloper.com/
 Text Domain: yith-woocommerce-social-login
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,9 +14,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 /*
- * @package YITH WooCommerce Social Login
- * @since   1.0.0
- * @author  Yithemes
+ * @package HWD WooCommerce Social Login
+ * @since   2.0.0
+ * @author  HWD
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
