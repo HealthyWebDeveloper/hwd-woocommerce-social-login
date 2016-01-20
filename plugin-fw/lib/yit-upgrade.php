@@ -60,8 +60,10 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
                 add_action( 'admin_enqueue_scripts', array( $this, 'network_admin_enqueue_scripts' ) );
             }
 
-            if( defined( 'YIT_LICENCE_DEBUG' ) && YIT_LICENCE_DEBUG ){
-                $this->_package_url = 'http://dev.yithemes.com';                
+            $is_debug_enabled = defined( 'YIT_LICENCE_DEBUG' ) && YIT_LICENCE_DEBUG;
+            if ( $is_debug_enabled ) {
+                $this->_package_url = defined( 'YIT_LICENCE_DEBUG_LOCALHOST' ) ? YIT_LICENCE_DEBUG_LOCALHOST : 'http://dev.yithemes.com';
+                add_filter( 'block_local_requests', '__return_false' );
             }
         }
 
@@ -129,12 +131,13 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
             );
 
             foreach( $this->_plugins as $init => $info ){
-                YIT_Plugin_Licence()->check( $init );
+                YIT_Plugin_Licence()->check( $init, false );
 
                 $update_url[ $init ]    = wp_nonce_url( self_admin_url('update.php?action=upgrade-plugin-multisite&plugin=') . $init, 'upgrade-plugin-multisite_' . $init );
                 $changelog_id           = str_replace( array( '/', '.php', '.' ), array( '-', '', '-' ), $init );
                 $details_url[ $init ]   = '#TB_inline' . esc_url( add_query_arg( array( 'width' => 722, 'height' => 914, 'inlineId' => $changelog_id ) , '' ) );
-                $changelogs[ $init ]    = $this->in_theme_update_message( $this->_plugins[ $init ], $this->_plugins[ $init ]['info']['changelog'], $changelog_id, false );
+                $plugin_changelog       = isset( $this->_plugins[ $init ]['info']['changelog'] ) ? $this->_plugins[ $init ]['info']['changelog'] : '';
+                $changelogs[ $init ]    = $this->in_theme_update_message( $this->_plugins[ $init ], $plugin_changelog, $changelog_id, false );
             }
 
             $localize_script_args = array(
@@ -157,7 +160,7 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
         }
 
         /**
-         * Call the protected method _upgrader_pre_download to retrive the zip package file
+         * Retrive the zip package file
          *
          * @param bool         $reply          Whether to bail without returning the package. Default false.
          * @param string       $package        The package file name.
@@ -170,34 +173,35 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
          * @access  public
          * @author   Andrea Grillo <andrea.grillo@yithemes.com>
          */
-        public function upgrader_pre_download( $reply, $package, $upgrader ){
-            return $this->_upgrader_pre_download( $reply, $package, $upgrader );
-        }
+        public function upgrader_pre_download( $reply, $package, $upgrader ) {
+            $plugin = false;
+            $is_bulk = $upgrader->skin instanceof Bulk_Plugin_Upgrader_Skin;
 
-        /**
-         * Retrive the zip package file
-         *
-         * @param bool         $reply          Whether to bail without returning the package. Default false.
-         * @param string       $package        The package file name.
-         * @param \WP_Upgrader $upgrader       WP_Upgrader instance.
-         *
-         * @return string | The download file
-         *
-         * @since    1.0
-         * @see      wp-admin/includes/class-wp-upgrader.php
-         * @access  protected
-         * @author   Andrea Grillo <andrea.grillo@yithemes.com>
-         */
-        protected function _upgrader_pre_download( $reply, $package, $upgrader ) {
+            if( ! $is_bulk ){
+                $plugin = isset( $upgrader->skin->plugin ) ? $upgrader->skin->plugin : false;
+            }
+
+            else {
+                //Bulk action upgrade
+                $action_url = parse_url( $upgrader->skin->options['url'] );
+                parse_str( rawurldecode( htmlspecialchars_decode( $action_url['query'] ) ) );
+                $plugins = explode( ',', $plugins );
+                foreach( $plugins as $plugin_init ){
+                    $to_upgrade = get_plugin_data( WP_PLUGIN_DIR . DIRECTORY_SEPARATOR .  $plugin_init );
+                    if( $to_upgrade['Name'] == $upgrader->skin->plugin_info['Name'] ){
+                        $plugin = $plugin_init;
+                    }
+                }
+            }
 
             /**
              * It isn't YITH Premium plugins, please wordpress update it for me!
              */
-            if( ! isset( $upgrader->skin->plugin ) ) {
+            if( ! $plugin ) {
                 return $reply;
             }
                 
-             $plugin_info = YIT_Plugin_Licence()->get_product( $upgrader->skin->plugin );
+            $plugin_info = YIT_Plugin_Licence()->get_product( $plugin );
 
             /**
              * False ? It isn't YITH Premium plugins, please wordpress update it for me!
@@ -227,7 +231,7 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
                 return new WP_Error( 'no_package', $upgrader->strings['no_package'] );
             }
 
-            $upgrader->skin->feedback( 'downloading_package', __( 'Yithemes Repository', 'yith-plugin-fw' ) );
+            $upgrader->skin->feedback( 'downloading_package', __( 'YIThemes Repository', 'yith-plugin-fw' ) );
 
             $download_file = $this->_download_url( $package, $args );
 
@@ -261,7 +265,7 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
 
             //WARNING: The file is not automatically deleted, The script must unlink() the file.
             if ( ! $url ) {
-                return new WP_Error( 'http_no_url', __( 'Invalid URL Provided.' ) );
+                return new WP_Error( 'http_no_url', __( 'Invalid URL Provided.', 'yit' ) );
             }
 
             $tmpfname = wp_tempnam( $url );
@@ -274,7 +278,7 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
             );
 
             if ( ! $tmpfname ) {
-                return new WP_Error( 'http_no_file', __( 'Could not create Temporary file.' ) );
+                return new WP_Error( 'http_no_file', __( 'Could not create Temporary file.', 'yit' ) );
             }
 
             $response = wp_safe_remote_post( $url, $args );
@@ -420,7 +424,7 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
                 }elseif( is_plugin_active_for_network( $init ) ){
                     printf( __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox yit-changelog-button" title="%3$s">View version %4$s details</a>. <em>You have to activate the plugin on a single site of the network to benefit from automatic updates.</em>', 'yith-plugin-fw' ), $this->_plugins[ $init ]['info']['Name'], esc_url( $details_url ), esc_attr( $this->_plugins[ $init ]['info']['Name'] ), $r->new_version );
                 }elseif ( empty( $r->package ) ) {
-                    printf( __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox yit-changelog-button" title="%3$s">View version %4$s details</a>. <em>Automatic update is unavailable for this plugin, please <a href="%5$s" title="Licence activation">activate</a> your copy of %6s.</em>', 'yith-plugin-fw' ), $this->_plugins[ $init ]['info']['Name'], esc_url( $details_url ), esc_attr( $this->_plugins[ $init ]['info']['Name'] ), $r->new_version, YIT_Plugin_Licence()->get_licence_activation_page_url(), $this->_plugins[ $init ]['info']['Name'] );
+                    printf( __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox yit-changelog-button" title="%3$s">View version %4$s details</a>. <em>Automatic update is unavailable for this plugin, please <a href="%5$s" title="License activation">activate</a> your copy of %6s.</em>', 'yith-plugin-fw' ), $this->_plugins[ $init ]['info']['Name'], esc_url( $details_url ), esc_attr( $this->_plugins[ $init ]['info']['Name'] ), $r->new_version, YIT_Plugin_Licence()->get_licence_activation_page_url(), $this->_plugins[ $init ]['info']['Name'] );
                 } else {
                     printf( __('There is a new version of %1$s available. <a href="%2$s" class="thickbox yit-changelog-button" title="%3$s">View version %4$s details</a> or <a href="%5$s">update now</a>.', 'yith-plugin-fw'), $this->_plugins[ $init ]['info']['Name'], esc_url($details_url), esc_attr( $this->_plugins[ $init ]['info']['Name'] ), $r->new_version, wp_nonce_url( self_admin_url('update.php?action=upgrade-plugin&plugin=') . $init, 'upgrade-plugin_' . $init ) );
                 }
@@ -506,7 +510,7 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
 
             check_admin_referer( 'upgrade-plugin-multisite_' . $plugin );
 
-            $title        = __( 'Update Plugin' );
+            $title        = __( 'Update Plugin', 'yith-plugin-fw' );
             $parent_file  = 'plugins.php';
             $submenu_file = 'plugins.php';
 

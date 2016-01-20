@@ -64,7 +64,7 @@ if( ! class_exists( 'YITH_WC_Social_Login' ) ){
 		 */
 		public function __construct() {
 			/* plugin */
-			add_action( 'after_setup_theme', array( $this, 'plugin_fw_loader' ), 1 );
+			add_action( 'plugins_loaded', array( $this, 'plugin_fw_loader' ), 15 );
 			require_once(YITH_YWSL_INC.'hybridauth/Hybrid/Auth.php');
 
 			$this->_set_config();
@@ -74,7 +74,7 @@ if( ! class_exists( 'YITH_WC_Social_Login' ) ){
             if( defined('YITH_YWSL_FREE_INIT') ) {
                 add_shortcode( 'yith_wc_social_login', array( $this, 'yith_wc_social_login_shortcode' ) );
             }
-			$this->hybridauth = new Hybrid_Auth( $this->config );
+
 			add_action('init', array($this,'get_login_request'));
 		}
 
@@ -99,8 +99,12 @@ if( ! class_exists( 'YITH_WC_Social_Login' ) ){
 		 * @author Andrea Grillo <andrea.grillo@yithemes.com>
 		 */
 		public function plugin_fw_loader() {
-			if ( !defined( 'YIT' ) || !defined( 'YIT_CORE_PLUGIN' ) ) {
-				require_once( YITH_YWSL_DIR.'/plugin-fw/yit-plugin.php' );
+			if ( ! defined( 'YIT_CORE_PLUGIN' ) ) {
+				global $plugin_fw_data;
+				if( ! empty( $plugin_fw_data ) ){
+					$plugin_fw_file = array_shift( $plugin_fw_data );
+					require_once( $plugin_fw_file );
+				}
 			}
 		}
 
@@ -142,12 +146,17 @@ if( ! class_exists( 'YITH_WC_Social_Login' ) ){
 					return;
 				}
 
+				try{
+					$this->hybridauth = new Hybrid_Auth( $this->config );
+				}catch ( Exception $e ) {
+					wp_safe_redirect( $this->get_redirect_to() );
+				}
+
 				try {
 					$adapter      = $this->hybridauth->authenticate( $social_name );
 					$user_profile = $adapter->getUserProfile();
-
 				} catch ( Exception $e ) {
-					echo $this->get_error( $e->getCode() );
+					//echo $this->get_error( $e->getCode() );
 					$this->hybridauth->logoutAllProviders();
 					exit;
 				}
@@ -192,26 +201,26 @@ if( ! class_exists( 'YITH_WC_Social_Login' ) ){
 					if( ! $yith_user_email && ! is_user_logged_in() ){
 						$show_form          = true;
 						$show_email         = true;
-						$show_form_errors[] = __('Add your email address', 'ywsl') ;
+						$show_form_errors[] = __('Add your email address', 'yith-woocommerce-social-login') ;
 					}
 
 					if(  $yith_user_email && ! $yith_user_email_validate ){
                             $show_form          = true;
                             $show_email         = true;
-                            $show_form_errors[] = __('Your email address is not valid!', 'ywsl') ;
+                            $show_form_errors[] = __('Your email address is not valid!', 'yith-woocommerce-social-login') ;
 					}
 
                     if ( $yith_user_email_validate && $this->verify_email_exists( $yith_user_email ) ) {
                         $show_form          = true;
                         $show_email         = true;
-                        $show_form_errors[] = __( 'This email already exists', 'ywsl' );
+                        $show_form_errors[] = __( 'This email already exists', 'yith-woocommerce-social-login' );
                     }
 
 
                     if( ! $yith_user_login || ! $yith_user_login_validate ){
 						$show_form          = true;
 						$show_username      = true;
-						$show_form_errors[] = __('Username is not valid!', 'ywsl') ;
+						$show_form_errors[] = __('Username is not valid!', 'yith-woocommerce-social-login') ;
 					}
 
 					if( $show_form ){
@@ -282,7 +291,7 @@ if( ! class_exists( 'YITH_WC_Social_Login' ) ){
 				$yith_user_login = trim( str_replace( '__', '_', $yith_user_login ) );
 			}
 
-			return $yith_user_login;
+			return apply_filters('yith_social_login_get_username', $yith_user_login, $hyb_user_login, $hyb_user_email);
 
 		}
 
@@ -430,31 +439,31 @@ if( ! class_exists( 'YITH_WC_Social_Login' ) ){
 			$error = '';
 			switch( $e_code ){
 				case 0 :
-					$error = __( 'Unspecified error.', 'ywsl' );
+					$error = __( 'Unspecified error.', 'yith-woocommerce-social-login' );
 					break;
 				case 1 :
-					$error = __( 'Hybriauth configuration error.', 'ywsl' );
+					$error = __( 'Hybriauth configuration error.', 'yith-woocommerce-social-login' );
 					break;
 				case 2 :
-					$error = __( 'Provider not properly configured.', 'ywsl' );
+					$error = __( 'Provider not properly configured.', 'yith-woocommerce-social-login' );
 					break;
 				case 3 :
-					$error = __( 'Unknown or disabled provider.', 'ywsl' );
+					$error = __( 'Unknown or disabled provider.', 'yith-woocommerce-social-login' );
 					break;
 				case 4 :
-					$error = __( 'Missing provider application credentials.', 'ywsl' );
+					$error = __( 'Missing provider application credentials.', 'yith-woocommerce-social-login' );
 					break;
 				case 5 :
-					$error = __( 'Authentification failed. The user has canceled the authentication or the provider refused the connection.', 'ywsl' );
+					$error = __( 'Authentification failed. The user has canceled the authentication or the provider refused the connection.', 'yith-woocommerce-social-login' );
 					break;
 				case 6 :
-					$error = __( 'User profile request failed. User might not be connected to the provider and have to authenticate again.', 'ywsl' );
+					$error = __( 'User profile request failed. User might not be connected to the provider and have to authenticate again.', 'yith-woocommerce-social-login' );
 					break;
 				case 7 :
-					$error = __( 'User not connected to the provider.', 'ywsl' );
+					$error = __( 'User not connected to the provider.', 'yith-woocommerce-social-login' );
 					break;
 				case 8 :
-					$error = __( 'Provider does not support this feature.', 'ywsl' );
+					$error = __( 'Provider does not support this feature.', 'yith-woocommerce-social-login' );
 					break;
 			}
 			return $error;

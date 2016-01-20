@@ -137,19 +137,19 @@ if( ! class_exists( 'YITH_WC_Social_Login_Admin' ) ){
             }
 
             $admin_tabs = array(
-                'settings' => __( 'Settings', 'ywsl' )
+                'settings' => __( 'Settings', 'yith-woocommerce-social-login' )
             );
 
             if ( defined( 'YITH_YWSL_FREE_INIT' ) ) {
-                $admin_tabs['premium'] = __( 'Premium Version', 'ywsl' );
+                $admin_tabs['premium'] = __( 'Premium Version', 'yith-woocommerce-social-login' );
             }
 
 
             $args = array(
                 'create_menu_page' => true,
                 'parent_slug'      => '',
-                'page_title'       => __( 'Social Login', 'ywsl' ),
-                'menu_title'       => __( 'Social Login', 'ywsl' ),
+                'page_title'       => __( 'Social Login', 'yith-woocommerce-social-login' ),
+                'menu_title'       => __( 'Social Login', 'yith-woocommerce-social-login' ),
                 'capability'       => 'manage_options',
                 'parent'           => '',
                 'parent_page'      => 'yit_plugin_panel',
@@ -180,7 +180,7 @@ if( ! class_exists( 'YITH_WC_Social_Login_Admin' ) ){
         public function premium_tab() {
             $premium_tab_template = YITH_YWSL_TEMPLATE_PATH . '/admin/' . $this->_premium;
             if ( file_exists( $premium_tab_template ) ) {
-                // include_once( $premium_tab_template );
+                include_once( $premium_tab_template );
             }
         }
 
@@ -201,9 +201,9 @@ if( ! class_exists( 'YITH_WC_Social_Login_Admin' ) ){
 
         public function action_links( $links ) {
 
-            $links[] = '<a href="' . admin_url( "admin.php?page={$this->_panel_page}" ) . '">' . __( 'Settings', 'ywsl' ) . '</a>';
+            $links[] = '<a href="' . admin_url( "admin.php?page={$this->_panel_page}" ) . '">' . __( 'Settings', 'yith-woocommerce-social-login' ) . '</a>';
             if ( defined( 'YITH_YWSL_FREE_INIT' ) ) {
-                $links[] = '<a href="' . $this->get_premium_landing_uri() . '" target="_blank">' . __( 'Premium Version', 'ywsl' ) . '</a>';
+                $links[] = '<a href="' . $this->get_premium_landing_uri() . '" target="_blank">' . __( 'Premium Version', 'yith-woocommerce-social-login' ) . '</a>';
             }
 
             return $links;
@@ -229,7 +229,7 @@ if( ! class_exists( 'YITH_WC_Social_Login_Admin' ) ){
         public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 
             if ( defined( 'YITH_YWSL_INIT' ) && YITH_YWSL_INIT == $plugin_file ) {
-                $plugin_meta[] = '<a href="' . $this->doc_url . '" target="_blank">' . __( 'Plugin Documentation', 'ywsl' ) . '</a>';
+                $plugin_meta[] = '<a href="' . $this->doc_url . '" target="_blank">' . __( 'Plugin Documentation', 'yith-woocommerce-social-login' ) . '</a>';
             }
             return $plugin_meta;
         }

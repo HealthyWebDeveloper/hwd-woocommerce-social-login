@@ -38,6 +38,11 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
         public $settings = array();
 
         /**
+         * @var array a setting list of parameters
+         */
+        public $wc_type = array();
+
+        /**
          * @var array
          */
         protected $_tabs_path_files;
@@ -50,6 +55,14 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
          * @author   Antonio La Rocca   <antonio.larocca@yithemes.com>
          */
         public function __construct( $args = array() ) {
+
+            $this->wc_type = array(
+                'checkbox',
+                'textarea',
+                'multiselect',
+                'multi_select_countries',
+                'image_width'
+            );
 
             if ( ! empty( $args ) ) {
                 $this->settings         = $args;
@@ -258,18 +271,33 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
                 if( version_compare( WC()->version, '2.4.0', '>=' ) ) {
                     if ( ! empty( $yit_options[ $current_tab ] ) ) {
                         foreach ( $yit_options[ $current_tab ] as $option ) {
-                            if ( isset( $option['id'] ) && isset( $_POST[ $option['id'] ] ) ) {
+                            if ( isset( $option['id'] ) && isset( $_POST[ $option['id'] ] ) && isset( $option['type' ] ) && ! in_array( $option['type'], $this->wc_type ) ) {
                                 $_POST[ $option['id'] ] = maybe_serialize( $_POST[ $option['id'] ] );
                             }
                         }
                     }
                 }
 
+                foreach($_POST as $name => $value) {
+
+                    //  Check if current POST var which name ends with a specific needle
+                    $attachment_id_needle = "-yith-attachment-id";
+                    $is_hidden_input = (($temp = strlen($name) - strlen($attachment_id_needle)) >= 0 && strpos($name, $attachment_id_needle, $temp) !== FALSE);
+                    if ($is_hidden_input){
+                        //  Is an input element of type "hidden" coupled with an input element for selecting an element from the media gallery
+                        $yit_options[ $current_tab ][$name] = array(
+                            "type" => "text",
+                            "id" => $name
+                        );
+                    }
+                }
+                
                 woocommerce_update_options( $yit_options[ $current_tab ] );
 
                 do_action( 'yit_panel_wc_after_update' );
 
-            } elseif( isset( $_REQUEST['yit-action'] ) && $_REQUEST['yit-action'] == 'wc-options-reset' ){
+            } elseif( isset( $_REQUEST['yit-action'] ) && $_REQUEST['yit-action'] == 'wc-options-reset'
+                && isset( $_POST['yith_wc_reset_options_nonce'] ) && wp_verify_nonce( $_POST['yith_wc_reset_options_nonce'], 'yith_wc_reset_options_'.$this->settings['page'] )){
 
                 $yit_options = $this->get_main_array_options();
                 $current_tab = $this->get_current_tab();
@@ -291,23 +319,27 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
          * @author   Antonio La Rocca   <antonio.larocca@yithemes.com>
          */
         public function admin_enqueue_scripts() { 
-            global $woocommerce;
+            global $woocommerce, $pagenow;
 
             wp_enqueue_style( 'raleway-font', '//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,100,200,300,900' );
 
             wp_enqueue_media();
             wp_enqueue_style( 'woocommerce_admin_styles', $woocommerce->plugin_url() . '/assets/css/admin.css', array(), $woocommerce->version );
-            wp_enqueue_style( 'yit-plugin-style', YIT_CORE_PLUGIN_URL . '/assets/css/yit-plugin-panel.css', $woocommerce->version );
+            wp_register_style( 'yit-plugin-style', YIT_CORE_PLUGIN_URL . '/assets/css/yit-plugin-panel.css', $woocommerce->version );
             wp_enqueue_style ( 'wp-jquery-ui-dialog' );
-
 
             wp_enqueue_style( 'jquery-chosen', YIT_CORE_PLUGIN_URL . '/assets/css/chosen/chosen.css' );
             wp_enqueue_script( 'jquery-chosen', YIT_CORE_PLUGIN_URL . '/assets/js/chosen/chosen.jquery.js', array( 'jquery' ), '1.1.0', true );
             wp_enqueue_script( 'woocommerce_settings', $woocommerce->plugin_url() . '/assets/js/admin/settings.min.js', array( 'jquery', 'jquery-ui-datepicker','jquery-ui-dialog', 'jquery-ui-sortable', 'iris', 'chosen' ), $woocommerce->version, true );
-            wp_enqueue_script( 'yit-plugin-panel', YIT_CORE_PLUGIN_URL . '/assets/js/yit-plugin-panel.min.js', array( 'jquery', 'jquery-chosen' ), $this->version, true );
+            wp_register_script( 'yit-plugin-panel', YIT_CORE_PLUGIN_URL . '/assets/js/yit-plugin-panel.min.js', array( 'jquery', 'jquery-chosen' ), $this->version, true );
             wp_localize_script( 'woocommerce_settings', 'woocommerce_settings_params', array(
                 'i18n_nav_warning' => __( 'The changes you have made will be lost if you leave this page.', 'yith-plugin-fw' )
             ) );
+
+            if( 'admin.php' == $pagenow && strpos( get_current_screen()->id, 'yit-plugins_page' ) !== false ){
+                 wp_enqueue_style( 'yit-plugin-style' );
+                 wp_enqueue_script( 'yit-plugin-panel' );
+            }
         }
 
         /**
@@ -351,8 +383,8 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
          * @return array Filtered body classes
          */
         public function admin_body_class( $admin_body_classes ){
-            $admin_body_classes .= ' woocommerce ';
-            return $admin_body_classes;
+            global $pagenow;
+            return 'admin.php' == $pagenow && substr_count( $admin_body_classes, 'woocommerce' ) == 0 ? $admin_body_classes .= ' woocommerce ' : $admin_body_classes;
         }
 
         /**
@@ -367,7 +399,9 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
          * @since 2.0
          */
         public function maybe_unserialize_panel_data( $value, $option, $raw_value ) {
-            if( ! version_compare( WC()->version, '2.4.0', '>='  ) ) {
+
+
+            if( ! version_compare( WC()->version, '2.4.0', '>='  ) || ! isset( $option['type' ] ) || in_array( $option['type'], $this->wc_type ) ) {
                 return $value;
             }
 

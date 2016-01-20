@@ -4,7 +4,7 @@ Contributors: yithemes
 Tags: social login, login, social provider, social authentication, authentication, connect with social, woocommerce connect, facebook, google, register, social networks, twitter
 Requires at least: 3.5.1
 Tested up to: 4.2
-Stable tag: 1.0.5
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,14 @@ YITH WooCommerce Social Login will add a new tab called "Social Login" in "YIT P
 = I would like to allow only Facebook login, what should I do?  =
 Go to Yit Plugins->Social Login->Settings: there you can enable only Facebook as Social Network available for login.
 
+= What are the main changes in plugin translation? =
+Recently YITH WooCommerce Social Login has been selected to be included in the "translate.wordpress.org" translate programme.
+In order to import correctly the plugin strings in the new system, we had to change the text domain form 'ywsl' to 'yith-woocommerce-social-login'.
+Once the plugin will be imported in the translate.wordpress.org system, the translations of other languages will be downloaded directly from WordPress, without using any .po and .mo files. Moreover, users will be able to participate in a more direct way to plugin translations, suggesting texts in their languages in the dedicated tab on translate.wordpress.org.
+During this transition step, .po and .mo files will be used as always, but in order to be recognized by WordPress, they will need to have a new nomenclature, renaming them in:
+
+* yith-woocommerce-social-login-[WORDPRESS LOCALE].po
+* yith-woocommerce-social-login-[WORDPRESS LOCALE].mo
 
 == Screenshots ==
 
@@ -54,6 +62,23 @@ Go to Yit Plugins->Social Login->Settings: there you can enable only Facebook as
 
 
 == Changelog ==
+= 1.0.9 =
+* Added: Support to Wordpress 4.4
+* Fixed: Catch the Exceptions when the login with provider is cancelled
+* Updated: Plugin Core Framework
+
+= 1.0.8 =
+* Fixed: YIT panel script not enqueue in admin
+
+= 1.0.7 =
+* Added: Swedish translation
+* Updated: Hybrid Library 2.6.0
+* Updated: Changed Text Domain from 'ywsl' to 'yith-woocommerce-social-login'
+
+= 1.0.6 =
+* Fixed: Template social buttons
+* Fixed: Removed "read_stream" Facebook scope
+* Updated: Plugin Core Framework
 
 = 1.0.5 =
 * Added: Support to WooCommerce 2.4.2

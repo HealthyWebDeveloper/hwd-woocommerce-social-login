@@ -1,14 +1,16 @@
 <?php
 /*
-Plugin Name: HWD WooCommerce Social Login
-Description: HWD WooCommerce Social login is a plugin that allows you to login to your e-commerce site through your Facebook or Twitter or Google+ account.
-Version: 2.0.6
-GitHub Plugin URI: https://github.com/HealthyWebDeveloper/hwd-woocommerce-social-login
+Plugin Name: YITH WooCommerce Social Login
+Description: YITH WooCommerce Social login is a plugin that allows you to login to your e-commerce site through your Facebook or Twitter or Google+ account.
+Version: 2.0.9
 Author: Yithemes
 Author URI: http://yithemes.com/
-Text Domain: ywsl
+Text Domain: yith-woocommerce-social-login
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+ GitHub Plugin URI: https://github.com/HealthyWebDeveloper/hwd-woocommerce-social-login
+
 */
 
 /*
@@ -25,12 +27,24 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
 
+
+if ( ! defined( 'YITH_YWSL_DIR' ) ) {
+    define( 'YITH_YWSL_DIR', plugin_dir_path( __FILE__ ) );
+}
+
+/* Plugin Framework Version Check */
+if( ! function_exists( 'yit_maybe_plugin_fw_loader' ) && file_exists( YITH_YWSL_DIR . 'plugin-fw/init.php' ) ) {
+    require_once( YITH_YWSL_DIR . 'plugin-fw/init.php' );
+}
+yit_maybe_plugin_fw_loader( YITH_YWSL_DIR  );
+
+
 // This version can't be activate if premium version is active  ________________________________________
 if ( defined( 'YITH_YWSL_PREMIUM' ) ) {
     function yith_ywsl_install_free_admin_notice() {
         ?>
         <div class="error">
-            <p><?php _e( 'You can\'t activate the free version of YITH Woocommerce Social Login while you are using the premium one.', 'ywsl' ); ?></p>
+            <p><?php _e( 'You can\'t activate the free version of YITH Woocommerce Social Login while you are using the premium one.', 'yith-woocommerce-social-login' ); ?></p>
         </div>
     <?php
     }
@@ -51,7 +65,7 @@ if ( !function_exists( 'yith_ywsl_install_woocommerce_admin_notice' ) ) {
 	function yith_ywsl_install_woocommerce_admin_notice() {
 		?>
 		<div class="error">
-			<p><?php _e( 'YITH Woocommerce Social Login is enabled but not effective. It requires WooCommerce in order to work.', 'ywsl' ); ?></p>
+			<p><?php _e( 'YITH Woocommerce Social Login is enabled but not effective. It requires WooCommerce in order to work.', 'yith-woocommerce-social-login' ); ?></p>
 		</div>
 	<?php
 	}
@@ -61,7 +75,7 @@ if ( !function_exists( 'yith_ywsl_install_woocommerce_admin_notice' ) ) {
 if ( defined( 'YITH_YWSL_VERSION' ) ) {
     return;
 }else{
-    define( 'YITH_YWSL_VERSION', '1.0.5' );
+    define( 'YITH_YWSL_VERSION', '1.0.9' );
 }
 
 if ( ! defined( 'YITH_YWSL_FREE_INIT' ) ) {
@@ -76,9 +90,6 @@ if ( ! defined( 'YITH_YWSL_FILE' ) ) {
     define( 'YITH_YWSL_FILE', __FILE__ );
 }
 
-if ( ! defined( 'YITH_YWSL_DIR' ) ) {
-    define( 'YITH_YWSL_DIR', plugin_dir_path( __FILE__ ) );
-}
 
 if ( ! defined( 'YITH_YWSL_URL' ) ) {
     define( 'YITH_YWSL_URL', plugins_url( '/', __FILE__ ) );
@@ -114,7 +125,7 @@ if ( ! function_exists( 'yith_ywsl_install' ) ) {
 function yith_ywsl_constructor() {
 
     // Load YWSL text domain ___________________________________
-    load_plugin_textdomain( 'ywsl', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    load_plugin_textdomain( 'yith-woocommerce-social-login', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	if(session_id() == '') {
 		session_start();

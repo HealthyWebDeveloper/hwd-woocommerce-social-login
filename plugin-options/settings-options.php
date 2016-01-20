@@ -18,20 +18,20 @@ return array(
 	'settings' => array(
 
         'section_general_settings_videobox'         => array(
-            'name' => __( 'Upgrade to the PREMIUM VERSION', 'ywsl' ),
+            'name' => __( 'Upgrade to the PREMIUM VERSION', 'yith-woocommerce-social-login' ),
             'type' => 'videobox',
             'default' => array(
-                'plugin_name'        => __( 'YITH WooCommerce Social Login', 'ywsl' ),
-                'title_first_column' => __( 'Discover Advanced Features', 'ywsl' ),
+                'plugin_name'        => __( 'YITH WooCommerce Social Login', 'yith-woocommerce-social-login' ),
+                'title_first_column' => __( 'Discover Advanced Features', 'yith-woocommerce-social-login' ),
                 'description_first_column' => __('Upgrade to the PREMIUM VERSION
-of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
+of YITH WooCommerce Social Login to benefit from all features!', 'yith-woocommerce-social-login'),
                 'video' => array(
                     'video_id'           => '125910673',
                     'video_image_url'    =>  YITH_YWSL_ASSETS_URL.'/images/yith-woocommerce-social-login.jpg',
                     'video_description'  => __( 'YITH WooCommerce Social Login', 'yit' ),
                 ),
-                'title_second_column' => __( 'Get Support and Pro Features', 'ywsl' ),
-                'description_second_column' => __('By purchasing the premium version of the plugin, you will benefit from the advanced features of the product and you will get one year of free update and support through our platform available 24h/24.', 'ywsl'),
+                'title_second_column' => __( 'Get Support and Pro Features', 'yith-woocommerce-social-login' ),
+                'description_second_column' => __('By purchasing the premium version of the plugin, you will benefit from the advanced features of the product and you will get one year of free update and support through our platform available 24h/24.', 'yith-woocommerce-social-login'),
                 'button' => array(
                     'href' =>  YITH_WC_Social_Login_Admin()->get_premium_landing_uri(),
                     'title' => 'Get Support and Pro Features'
@@ -41,24 +41,24 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
 		'section_general_settings'     => array(
-			'name' => __( 'General settings', 'ywsl' ),
+			'name' => __( 'General settings', 'yith-woocommerce-social-login' ),
 			'type' => 'title',
 			'id'   => 'ywsl_section_general'
 		),
 
         'social_label' => array(
-            'name'    => __( 'Label', 'ywsl' ),
-            'desc'    => __( 'Change content of the label to display above social login buttons', 'ywsl' ),
+            'name'    => __( 'Label', 'yith-woocommerce-social-login' ),
+            'desc'    => __( 'Change content of the label to display above social login buttons', 'yith-woocommerce-social-login' ),
             'id'      => 'ywsl_social_label',
-            'default' => __('Login with:', 'ywsl'),
+            'default' => __('Login with:', 'yith-woocommerce-social-login'),
             'type'    => 'text'
         ),
 
         'social_label_checkout' => array(
-            'name'    => __( 'Description in checkout page', 'ywsl' ),
-            'desc'    => __( 'Change content of the description in checkout page', 'ywsl' ),
+            'name'    => __( 'Description in checkout page', 'yith-woocommerce-social-login' ),
+            'desc'    => __( 'Change content of the description in checkout page', 'yith-woocommerce-social-login' ),
             'id'      => 'ywsl_social_label_checkout',
-            'default' => __('Social sign-in', 'ywsl'),
+            'default' => __('Social sign-in', 'yith-woocommerce-social-login'),
             'type'    => 'text'
         ),
 
@@ -68,13 +68,13 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
 		),
 
         'section_facebook_settings'     => array(
-            'name' => __( 'Facebook settings', 'ywsl' ),
+            'name' => __( 'Facebook settings', 'yith-woocommerce-social-login' ),
             'type' => 'title',
             'id'   => 'ywsl_section_facebook'
         ),
 
         'facebook_enable' => array(
-            'name'    => __( 'Enable Facebook Login', 'ywsl' ),
+            'name'    => __( 'Enable Facebook Login', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_facebook_enable',
             'default' => 'no',
@@ -82,7 +82,7 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
         'facebook_id' => array(
-            'name'    => __( 'Facebook App Id', 'ywsl' ),
+            'name'    => __( 'Facebook App Id', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_facebook_id',
             'default' => '',
@@ -90,7 +90,7 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
         'facebook_secret' => array(
-            'name'    => __( 'Facebook Secret', 'ywsl' ),
+            'name'    => __( 'Facebook Secret', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_facebook_secret',
             'default' => '',
@@ -103,14 +103,14 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
         'section_twitter_settings'     => array(
-            'name' => __( 'Twitter settings', 'ywsl' ),
-            'desc'    =>  __( '<strong>Callback URL</strong>: '.YITH_YWSL_URL . 'includes/hybridauth/?hauth.done=Twitter', 'ywsl' ),
+            'name' => __( 'Twitter settings', 'yith-woocommerce-social-login' ),
+            'desc'    =>  __( '<strong>Callback URL</strong>: '.YITH_YWSL_URL . 'includes/hybridauth/?hauth.done=Twitter', 'yith-woocommerce-social-login' ),
             'type' => 'title',
             'id'   => 'ywsl_section_twitter'
         ),
 
         'twitter_enable' => array(
-            'name'    => __( 'Enable Twitter Login', 'ywsl' ),
+            'name'    => __( 'Enable Twitter Login', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_twitter_enable',
             'default' => 'no',
@@ -118,7 +118,7 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
         'twitter_key' => array(
-            'name'    => __( 'Twitter Key', 'ywsl' ),
+            'name'    => __( 'Twitter Key', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_twitter_key',
             'default' => '',
@@ -126,7 +126,7 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
         'twitter_secret' => array(
-            'name'    => __( 'Twitter Secret', 'ywsl' ),
+            'name'    => __( 'Twitter Secret', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_twitter_secret',
             'default' => '',
@@ -138,15 +138,15 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
             'id'   => 'ywsl_section_twitter_end'
         ),
         'section_google_settings'     => array(
-            'name' =>  __( 'Google settings', 'ywsl' ),
-            'desc'    =>  __( '<strong>Callback URL</strong>: '.YITH_YWSL_URL . 'includes/hybridauth/?hauth.done=Google', 'ywsl' ),
+            'name' =>  __( 'Google settings', 'yith-woocommerce-social-login' ),
+            'desc'    =>  __( '<strong>Callback URL</strong>: '.YITH_YWSL_URL . 'includes/hybridauth/?hauth.done=Google', 'yith-woocommerce-social-login' ),
             'type' => 'title',
             'id'   => 'ywsl_section_google'
         ),
 
 
         'google_enable' => array(
-            'name'    => __( 'Enable Google Login', 'ywsl' ),
+            'name'    => __( 'Enable Google Login', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_google_enable',
             'default' => 'no',
@@ -154,7 +154,7 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
         'google_id' => array(
-            'name'    => __( 'Google ID', 'ywsl' ),
+            'name'    => __( 'Google ID', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_google_id',
             'default' => '',
@@ -162,7 +162,7 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         ),
 
         'google_secret' => array(
-            'name'    => __( 'Google secret', 'ywsl' ),
+            'name'    => __( 'Google secret', 'yith-woocommerce-social-login' ),
             'desc'    => '',
             'id'      => 'ywsl_google_secret',
             'default' => '',
@@ -172,36 +172,6 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         'section_google_settings_end' => array(
             'type' => 'sectionend',
             'id'   => 'ywsl_section_google_end'
-        ),
-
-        'section_fitbit_settings'     => array(
-            'name' => __( 'Fitbit settings', 'ywsl' ),
-            'type' => 'title',
-            'id'   => 'ywsl_section_fitbit'
-        ),
-
-        'fitbit_enable' => array(
-            'name'    => __( 'Enable Fitbit Login', 'ywsl' ),
-            'desc'    => '',
-            'id'      => 'ywsl_fitbit_enable',
-            'default' => 'no',
-            'type'    => 'checkbox'
-        ),
-
-        'fitbit_id' => array(
-            'name'    => __( 'Fitbit App Id', 'ywsl' ),
-            'desc'    => '',
-            'id'      => 'ywsl_fitbit_id',
-            'default' => '',
-            'type'    => 'text'
-        ),
-
-        'fitbit_secret' => array(
-            'name'    => __( 'Fitbit Secret', 'ywsl' ),
-            'desc'    => '',
-            'id'      => 'ywsl_fitbit_secret',
-            'default' => '',
-            'type'    => 'text'
-        ),
+        )
 	)
 );

@@ -1,7 +1,8 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: YIT WooCommerce Social Login\n"
-"POT-Creation-Date: 2015-06-19 13:07+0100\n"
+"POT-Creation-Date: 2015-12-04 14:54+0100\n"
 "PO-Revision-Date: 2015-06-19 13:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: Yithemes <plugins@yithemes.com>\n"
@@ -9,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_n:1,2;__ngettext:1,2;"
 "__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
 "_nx_noop:4c,1,2\n"
@@ -37,59 +38,59 @@ msgstr ""
 msgid "Plugin Documentation"
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:195
+#: ../includes/class-yith-social-login.php:194
 msgid "Add your email address"
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:201
+#: ../includes/class-yith-social-login.php:200
 msgid "Your email address is not valid!"
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:207
+#: ../includes/class-yith-social-login.php:206
 msgid "This email already exists"
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:214
+#: ../includes/class-yith-social-login.php:213
 msgid "Username is not valid!"
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:433
+#: ../includes/class-yith-social-login.php:432
 msgid "Unspecified error."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:436
+#: ../includes/class-yith-social-login.php:435
 msgid "Hybriauth configuration error."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:439
+#: ../includes/class-yith-social-login.php:438
 msgid "Provider not properly configured."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:442
+#: ../includes/class-yith-social-login.php:441
 msgid "Unknown or disabled provider."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:445
+#: ../includes/class-yith-social-login.php:444
 msgid "Missing provider application credentials."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:448
+#: ../includes/class-yith-social-login.php:447
 msgid ""
 "Authentification failed. The user has canceled the authentication or the "
 "provider refused the connection."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:451
+#: ../includes/class-yith-social-login.php:450
 msgid ""
 "User profile request failed. User might not be connected to the provider and "
 "have to authenticate again."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:454
+#: ../includes/class-yith-social-login.php:453
 msgid "User not connected to the provider."
 msgstr ""
 
-#: ../includes/class-yith-social-login.php:457
+#: ../includes/class-yith-social-login.php:456
 msgid "Provider does not support this feature."
 msgstr ""
 
@@ -102,7 +103,7 @@ msgstr ""
 #: ../init.php:53
 msgid ""
 "YITH Woocommerce Social Login is enabled but not effective. It requires "
-"Woocommerce in order to work."
+"WooCommerce in order to work."
 msgstr ""
 
 #: ../plugin-options/settings-options.php:21

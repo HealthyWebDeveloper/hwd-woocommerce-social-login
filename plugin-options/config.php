@@ -31,13 +31,6 @@ return array(
 				'key'    => get_option( 'ywsl_twitter_key' ),
 				'secret' => get_option( 'ywsl_twitter_secret' )
 			)
-		),
-
-		'Fitbit' => array (
-			'enabled' => ( get_option('ywsl_fitbit_enable') == 'yes') ? true: false,
-			'keys'    => array (
-				'id'     => get_option( 'ywsl_fitbit_id' ),
-				'secret' => get_option( 'ywsl_fitbit_secret' ))
 		)
 	),
 	'debug_mode' => false,

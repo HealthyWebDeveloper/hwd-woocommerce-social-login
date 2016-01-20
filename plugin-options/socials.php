@@ -2,19 +2,15 @@
 
 return  array(
 	'facebook' => array(
-		'label' => __( 'Facebook', 'ywsl' ),
+		'label' => __( 'Facebook', 'yith-woocommerce-social-login' ),
 		'color' => '#3b5998'
 	),
 	'twitter'  => array(
-		'label' => __( 'Twitter', 'ywsl' ),
+		'label' => __( 'Twitter', 'yith-woocommerce-social-login' ),
 		'color' => '#00aced'
 	),
 	'google'   => array(
-		'label' => __( 'Google', 'ywsl' ),
+		'label' => __( 'Google', 'yith-woocommerce-social-login' ),
 		'color' => '#dd4b39'
-	),
-	'fitbit'   => array(
-		'label' => __( 'Fitbit', 'ywsl' ),
-		'color' => '#3ec1c1'
 	)
 );
