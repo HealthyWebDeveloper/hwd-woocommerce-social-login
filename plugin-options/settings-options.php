@@ -17,28 +17,28 @@ return array(
 
 	'settings' => array(
 
-        'section_general_settings_videobox'         => array(
-            'name' => __( 'Upgrade to the PREMIUM VERSION', 'yith-woocommerce-social-login' ),
-            'type' => 'videobox',
-            'default' => array(
-                'plugin_name'        => __( 'YITH WooCommerce Social Login', 'yith-woocommerce-social-login' ),
-                'title_first_column' => __( 'Discover Advanced Features', 'yith-woocommerce-social-login' ),
-                'description_first_column' => __('Upgrade to the PREMIUM VERSION
-of YITH WooCommerce Social Login to benefit from all features!', 'yith-woocommerce-social-login'),
-                'video' => array(
-                    'video_id'           => '125910673',
-                    'video_image_url'    =>  YITH_YWSL_ASSETS_URL.'/images/yith-woocommerce-social-login.jpg',
-                    'video_description'  => __( 'YITH WooCommerce Social Login', 'yit' ),
-                ),
-                'title_second_column' => __( 'Get Support and Pro Features', 'yith-woocommerce-social-login' ),
-                'description_second_column' => __('By purchasing the premium version of the plugin, you will benefit from the advanced features of the product and you will get one year of free update and support through our platform available 24h/24.', 'yith-woocommerce-social-login'),
-                'button' => array(
-                    'href' =>  YITH_WC_Social_Login_Admin()->get_premium_landing_uri(),
-                    'title' => 'Get Support and Pro Features'
-                )
-            ),
-            'id'   => 'ywsl_general_videobox'
-        ),
+//         'section_general_settings_videobox'         => array(
+//             'name' => __( 'Upgrade to the PREMIUM VERSION', 'yith-woocommerce-social-login' ),
+//             'type' => 'videobox',
+//             'default' => array(
+//                 'plugin_name'        => __( 'YITH WooCommerce Social Login', 'yith-woocommerce-social-login' ),
+//                 'title_first_column' => __( 'Discover Advanced Features', 'yith-woocommerce-social-login' ),
+//                 'description_first_column' => __('Upgrade to the PREMIUM VERSION
+// of YITH WooCommerce Social Login to benefit from all features!', 'yith-woocommerce-social-login'),
+//                 'video' => array(
+//                     'video_id'           => '125910673',
+//                     'video_image_url'    =>  YITH_YWSL_ASSETS_URL.'/images/yith-woocommerce-social-login.jpg',
+//                     'video_description'  => __( 'YITH WooCommerce Social Login', 'yit' ),
+//                 ),
+//                 'title_second_column' => __( 'Get Support and Pro Features', 'yith-woocommerce-social-login' ),
+//                 'description_second_column' => __('By purchasing the premium version of the plugin, you will benefit from the advanced features of the product and you will get one year of free update and support through our platform available 24h/24.', 'yith-woocommerce-social-login'),
+//                 'button' => array(
+//                     'href' =>  YITH_WC_Social_Login_Admin()->get_premium_landing_uri(),
+//                     'title' => 'Get Support and Pro Features'
+//                 )
+//             ),
+//             'id'   => 'ywsl_general_videobox'
+//         ),
 
 		'section_general_settings'     => array(
 			'name' => __( 'General settings', 'yith-woocommerce-social-login' ),
@@ -172,6 +172,42 @@ of YITH WooCommerce Social Login to benefit from all features!', 'yith-woocommer
         'section_google_settings_end' => array(
             'type' => 'sectionend',
             'id'   => 'ywsl_section_google_end'
+        ),
+        'section_fitbit_settings'     => array(
+            'name' =>  __( 'Fitbit settings', 'yith-woocommerce-social-login' ),
+            'desc'    =>  __( '<strong>Callback URL</strong>: '.YITH_YWSL_URL . 'includes/hybridauth/?hauth.done=Fitbit', 'yith-woocommerce-social-login' ),
+            'type' => 'title',
+            'id'   => 'ywsl_section_fitbit'
+        ),
+
+
+        'fitbit_enable' => array(
+            'name'    => __( 'Enable Fitbit Login', 'yith-woocommerce-social-login' ),
+            'desc'    => '',
+            'id'      => 'ywsl_fitbit_enable',
+            'default' => 'no',
+            'type'    => 'checkbox'
+        ),
+
+        'fitbit_id' => array(
+            'name'    => __( 'Fitbit ID', 'yith-woocommerce-social-login' ),
+            'desc'    => '',
+            'id'      => 'ywsl_fitbit_id',
+            'default' => '',
+            'type'    => 'text'
+        ),
+
+        'fitbit_secret' => array(
+            'name'    => __( 'Fitbit secret', 'yith-woocommerce-social-login' ),
+            'desc'    => '',
+            'id'      => 'ywsl_fitbit_secret',
+            'default' => '',
+            'type'    => 'text'
+        ),
+
+        'section_fitbit_settings_end' => array(
+            'type' => 'sectionend',
+            'id'   => 'ywsl_section_fitbit_end'
         )
 	)
 );
