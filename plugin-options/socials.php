@@ -12,5 +12,9 @@ return  array(
 	'google'   => array(
 		'label' => __( 'Google', 'yith-woocommerce-social-login' ),
 		'color' => '#dd4b39'
+	),
+	'fitbit'   => array(
+		'label' => __( 'Fitbit', 'yith-woocommerce-social-login' ),
+		'color' => '#3ec1c1'
 	)
 );
