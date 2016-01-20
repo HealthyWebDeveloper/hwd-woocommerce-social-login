@@ -12,5 +12,9 @@ return  array(
 	'google'   => array(
 		'label' => __( 'Google', 'ywsl' ),
 		'color' => '#dd4b39'
+	),
+	'fitbit'   => array(
+		'label' => __( 'Fitbit', 'ywsl' ),
+		'color' => '#3ec1c1'
 	)
 );

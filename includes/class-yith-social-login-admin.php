@@ -180,7 +180,7 @@ if( ! class_exists( 'YITH_WC_Social_Login_Admin' ) ){
         public function premium_tab() {
             $premium_tab_template = YITH_YWSL_TEMPLATE_PATH . '/admin/' . $this->_premium;
             if ( file_exists( $premium_tab_template ) ) {
-                include_once( $premium_tab_template );
+                // include_once( $premium_tab_template );
             }
         }
 

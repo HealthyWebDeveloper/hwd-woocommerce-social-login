@@ -1,8 +1,9 @@
 <?php
 /*
-Plugin Name: YITH WooCommerce Social Login
-Description: YITH WooCommerce Social login is a plugin that allows you to login to your e-commerce site through your Facebook or Twitter or Google+ account.
-Version: 1.0.5
+Plugin Name: HWD WooCommerce Social Login
+Description: HWD WooCommerce Social login is a plugin that allows you to login to your e-commerce site through your Facebook or Twitter or Google+ account.
+Version: 2.0.6
+GitHub Plugin URI: https://github.com/HealthyWebDeveloper/hwd-woocommerce-social-login
 Author: Yithemes
 Author URI: http://yithemes.com/
 Text Domain: ywsl

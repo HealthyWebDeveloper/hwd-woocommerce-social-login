@@ -172,6 +172,36 @@ of YITH WooCommerce Social Login to benefit from all features!', 'ywsl'),
         'section_google_settings_end' => array(
             'type' => 'sectionend',
             'id'   => 'ywsl_section_google_end'
-        )
+        ),
+
+        'section_fitbit_settings'     => array(
+            'name' => __( 'Fitbit settings', 'ywsl' ),
+            'type' => 'title',
+            'id'   => 'ywsl_section_fitbit'
+        ),
+
+        'fitbit_enable' => array(
+            'name'    => __( 'Enable Fitbit Login', 'ywsl' ),
+            'desc'    => '',
+            'id'      => 'ywsl_fitbit_enable',
+            'default' => 'no',
+            'type'    => 'checkbox'
+        ),
+
+        'fitbit_id' => array(
+            'name'    => __( 'Fitbit App Id', 'ywsl' ),
+            'desc'    => '',
+            'id'      => 'ywsl_fitbit_id',
+            'default' => '',
+            'type'    => 'text'
+        ),
+
+        'fitbit_secret' => array(
+            'name'    => __( 'Fitbit Secret', 'ywsl' ),
+            'desc'    => '',
+            'id'      => 'ywsl_fitbit_secret',
+            'default' => '',
+            'type'    => 'text'
+        ),
 	)
 );
