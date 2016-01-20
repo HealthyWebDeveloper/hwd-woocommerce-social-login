@@ -59,6 +59,11 @@ return
 				"enabled" => true,
 				"keys"    => array ( "id" => "", "secret" => "" )
 			),
+
+			"Fitbit" => array (
+				"enabled" => true,
+				"keys"    => array ( "id" => "", "secret" => "" ),
+			),
 		),
 
 		// If you want to enable logging, set 'debug_mode' to true.
